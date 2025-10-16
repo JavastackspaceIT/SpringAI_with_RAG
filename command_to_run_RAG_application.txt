@@ -1,0 +1,58 @@
+
+docker build -t rag-app .
+
+
+docker compose up
+
+
+
+
+ to connect with database 
+ 
+docker exec -it springRAG psql -U postgres -d ragdocs
+
+c:\> \dt   to check the tables
+
+
+\d+ ragdocs   ---> to check the table fields 
+
+
+
+to go back sql : just pres q
+
+
+
+
+SELECT SUM(length(content)) AS total_characters
+FROM qa_chunks;
+
+
+SELECT id, substring(content,1,100000) AS preview, metadata
+FROM qa_chunks;
+
+
+SELECT id,
+       substring(content,1,120) AS preview,
+       jsonb_pretty(metadata) AS metadata
+FROM qa_chunks
+ORDER BY id;
+
+SELECT id,
+       substring(content,1,120) AS preview,
+       jsonb_pretty(metadata) AS metadata, embedding
+FROM qa_chunks
+ORDER BY id;
+
+
+
+==============
+
+SELECT id,
+       substring(content,1,120) AS preview,
+       jsonb_pretty(metadata::jsonb) AS metadata,
+	   embedding
+FROM qa_chunks
+ORDER BY id;
+
+
+\d+ qa_chunks;
